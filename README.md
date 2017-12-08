@@ -1,2 +1,2 @@
 # Vocaluino
-MIDI device for playing drum, vocal, PSG, etc.
+MIDI device for playing drum, vocal, PSG, etc with Arduino.
