@@ -46,10 +46,6 @@ void set_ch(Channel ch, int note) {
  } else {
  ymz.SetVolume(ch, ymz_vol);
  ymz.SetFrequency(ch, noteFreq[note]);
-  ymz.SetEnvFrequency(150);
-  ymz.SetEnvShape(1,1,0,1);
-
-
  }
 
 }
