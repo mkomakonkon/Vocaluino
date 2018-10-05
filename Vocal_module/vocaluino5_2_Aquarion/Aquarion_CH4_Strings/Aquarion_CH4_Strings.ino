@@ -1,12 +1,19 @@
 /* 
- *  Vocaluino Ver.4.00
+ * Vocaluino Ver.5.01
+ *  低音を再チューニング
+ * Vocaluino Ver.4.03
+ *  LEDはArduinoで制御しない(ATPの/PLAY端子で点灯する)
+ * Vocaluino Ver.4.00
  *  弐号機の実装にLEDアサインを変更
- *  Vocaluino Ver.3.90
- * 連続する同一Noteを識別できるよう変更し
- * 初音ミクの消失に対応
- * Ver.2.03で正常なピッチに変更済
- * ライセンスの都合でニコのみのうＰ
- * http://www.nicovideo.jp/watch/sm32357512
+ * Vocaluino Ver.3.90
+ *  連続する同一Noteを識別できるよう変更し
+ *  初音ミクの消失に対応
+ * Vocaluino Ver.2.03
+ *  YMZモジュールに合わせたピッチに修正
+ * Vocaluino Ver.1.00
+ *  2017/10/14作成(歌詞を再生)
+ * Vocaluino proto type
+ *  2017/10/13作成(音階のみ)
  */
 #include <AquesTalk.h>
 #include <Wire.h>  // I2Cライブラリ 必須！
@@ -15,73 +22,71 @@
 //MIDI_CREATE_INSTANCE(HardwareSerial, Serial1, MIDI);
 MIDI_CREATE_DEFAULT_INSTANCE();
 AquesTalk atp1(AQTK_I2C_ADDR);  // デフォルトI2Cアドレス(0x2E)
-AquesTalk atp2(0x2F); // もうひとつのデバイスのI2Cアドレスは0x2Fとする(要改造)
+AquesTalk atp2(0x2F); // もうひとつのデバイスのI2Cアドレスは下記ツールで0x2Fとする
+                       //https://www.a-quest.com/products/pico_rom_writer.html
 
-const int ledPin1 =  8;
-const int ledPin2 =  9;
-
-// MIDIからAquestalkのピッチに変換----------------------------------------------------------------------------------------------------------------------------------------------
+// MIDIからAquestalkのピッチに変換------------------------
 int m2t[127] = {
-237, //NOTE_C-1,No_0
-217, //NOTE_CS-1,No_1
-201, //NOTE_D-1,No_2
-190, //NOTE_DS-1,No_3
-176, //NOTE_E-1,No_4
-165, //NOTE_F-1,No_5
-155, //NOTE_FS-1,No_6
-146, //NOTE_G-1,No_7
-137, //NOTE_GS-1,No_8
-129, //NOTE_A-1,No_9
-121, //NOTE_AS-1,No_10
-112, //NOTE_B-1,No_11
-237, //NOTE_C0,No_12
-217, //NOTE_CS0,No_13
-201, //NOTE_D0,No_14
-190, //NOTE_DS0,No_15
-176, //NOTE_E0,No_16
-165, //NOTE_F0,No_17
-155, //NOTE_FS0,No_18
-146, //NOTE_G0,No_19
-137, //NOTE_GS0,No_20
-129, //NOTE_A0,No_21
-121, //NOTE_AS0,No_22
-112, //NOTE_B0,No_23
-237, //NOTE_C1,No_24
-217, //NOTE_CS1,No_25
-201, //NOTE_D1,No_26
-190, //NOTE_DS1,No_27
-176, //NOTE_E1,No_28
-165, //NOTE_F1,No_29
-155, //NOTE_FS1,No_30
-146, //NOTE_G1,No_31
-137, //NOTE_GS1,No_32
-129, //NOTE_A1,No_33
-121, //NOTE_AS1,No_34
-112, //NOTE_B1,No_35
-237, //NOTE_C2,No_36
-217, //NOTE_CS2,No_37
-201, //NOTE_D2,No_38
-190, //NOTE_DS2,No_39
-176, //NOTE_E2,No_40
-165, //NOTE_F2,No_41
-155, //NOTE_FS2,No_42
-146, //NOTE_G2,No_43
-137, //NOTE_GS2,No_44
-129, //NOTE_A2,No_45
-121, //NOTE_AS2,No_46
-112, //NOTE_B2,No_47
-237, //NOTE_C3,No_48
-217, //NOTE_CS3,No_49
-201, //NOTE_D3,No_50
+230, //NOTE_C3,No_48
+216, //NOTE_CS3,No_49
+203, //NOTE_D3,No_50
 190, //NOTE_DS3,No_51
-176, //NOTE_E3,No_52
-165, //NOTE_F3,No_53
-155, //NOTE_FS3,No_54
-146, //NOTE_G3,No_55
-137, //NOTE_GS3,No_56
+179, //NOTE_E3,No_52
+168, //NOTE_F3,No_53
+157, //NOTE_FS3,No_54
+147, //NOTE_G3,No_55
+138, //NOTE_GS3,No_56
 129, //NOTE_A3,No_57
 121, //NOTE_AS3,No_58
-112, //NOTE_B3,No_59
+113, //NOTE_B3,No_59
+230, //NOTE_C3,No_48
+216, //NOTE_CS3,No_49
+203, //NOTE_D3,No_50
+190, //NOTE_DS3,No_51
+179, //NOTE_E3,No_52
+168, //NOTE_F3,No_53
+157, //NOTE_FS3,No_54
+147, //NOTE_G3,No_55
+138, //NOTE_GS3,No_56
+129, //NOTE_A3,No_57
+121, //NOTE_AS3,No_58
+113, //NOTE_B3,No_59
+230, //NOTE_C3,No_48
+216, //NOTE_CS3,No_49
+203, //NOTE_D3,No_50
+190, //NOTE_DS3,No_51
+179, //NOTE_E3,No_52
+168, //NOTE_F3,No_53
+157, //NOTE_FS3,No_54
+147, //NOTE_G3,No_55
+138, //NOTE_GS3,No_56
+129, //NOTE_A3,No_57
+121, //NOTE_AS3,No_58
+113, //NOTE_B3,No_59
+230, //NOTE_C3,No_48
+216, //NOTE_CS3,No_49
+203, //NOTE_D3,No_50
+190, //NOTE_DS3,No_51
+179, //NOTE_E3,No_52
+168, //NOTE_F3,No_53
+157, //NOTE_FS3,No_54
+147, //NOTE_G3,No_55
+138, //NOTE_GS3,No_56
+129, //NOTE_A3,No_57
+121, //NOTE_AS3,No_58
+113, //NOTE_B3,No_59
+230, //NOTE_C3,No_48
+216, //NOTE_CS3,No_49
+203, //NOTE_D3,No_50
+190, //NOTE_DS3,No_51
+179, //NOTE_E3,No_52
+168, //NOTE_F3,No_53
+157, //NOTE_FS3,No_54
+147, //NOTE_G3,No_55
+138, //NOTE_GS3,No_56
+129, //NOTE_A3,No_57
+121, //NOTE_AS3,No_58
+113, //NOTE_B3,No_59
 106, //NOTE_C4,No_60
 98, //NOTE_CS4,No_61
 92, //NOTE_D4,No_62
@@ -136,6 +141,7 @@ int m2t[127] = {
 8, //NOTE_DS8,No_111
 };
 
+// 発声データ登録------------------------
 const char a[] PROGMEM = "aaaaaaaaaaaaaaaaaaaa";
 const char i[] PROGMEM = "iiiiiiiiiiiiiiiiiiii";
 const char u[] PROGMEM = "uuuuuuuuuuuuuuuuuuuu";
@@ -209,7 +215,7 @@ const char re[] PROGMEM = "reeeeeeeeeeeeeeeeeeee";
 const char ro[] PROGMEM = "roooooooooooooooooooo";
 const char wa[] PROGMEM = "waaaaaaaaaaaaaaaaaaaa";
 const char wo[] PROGMEM = "woooooooooooooooooooo";
-const char n[] PROGMEM = "n--------------------";
+const char n[] PROGMEM = "n----------------------------";
 const char kya[] PROGMEM = "kyaaaaaaaaaaaaaaaaaaaa";
 const char kyu[] PROGMEM = "kyuuuuuuuuuuuuuuuuuuuu";
 const char kyo[] PROGMEM = "kyoooooooooooooooooooo";
@@ -250,7 +256,7 @@ const char sinn[] PROGMEM = "sinnnnnnnnnnnnnnnnnnnnn";
 const char son[] PROGMEM = "son";
 const char syun[] PROGMEM = "syun";
 const char kai[] PROGMEM = "kaaii";
-const char tai[] PROGMEM = "tai";
+const char tai[] PROGMEM = "taiiiiiiiiiiiiii";
 const char tann[] PROGMEM = "taan";
 const char tyan[] PROGMEM = "tyann";
 const char miti[] PROGMEM = "mitiii";
@@ -265,39 +271,33 @@ const char paaku[] PROGMEM = "paaaaa_ku";
 const char gao[] PROGMEM = "gaoooooooooooooooooooo";
 const char hon[] PROGMEM = "honnnnnnnnnnnnnnnnnnnnn";
 const char nin[] PROGMEM = "ninnnnnnnnnnnnnnnnnnnnn";
-const char teen[] PROGMEM = "teeen";
-const char den[] PROGMEM = "den";
-const char tin[] PROGMEM = "tin";
-const char pun[] PROGMEM = "pun";
-const char kan[] PROGMEM = "kan";
-const char naai[] PROGMEM = "naaai";
-const char pai[] PROGMEM = "paaai";
-const char fa[] PROGMEM = "faaaaaaaaaaaaaaaaaaaa";
-const char weeru[] PROGMEM = "weeeruu";
-const char kaamu[] PROGMEM = "kaaamuu";
-const char hai[] PROGMEM = "haaii";
+const char aaa[] PROGMEM = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
-
+// 歌詞データ登録------------------------
 const char * const string_table[] PROGMEM = {
-//e,
-
-//セリフ
-
-weru,kamu,twu,yo,ko,so,ja,pa,ri,paaku,
-
-//ja,pa,ri,paaku,
-//ra,ra,ra,ra,
-//ra,ra,ra,ra,
-//hai,hai,
-
-//ra,ra,ra,ra,
-//ra,ra,ra,ra,
-//ja,pa,ri,paaku,
-//ra,ra,ra,ra,
-//ra,ra,ra,ra,
-//hai,hai,
-
-
+aaa,aaa,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
+n,n,n,n,n,n,n,n,n,
 };
 
 char buffer[30];
@@ -305,18 +305,15 @@ int NOTE_1 = 0;
 int NOTE_2 = 0;
 int NOW_NOTE = 1;
 int note;
-int ch = 13;         //Read channel set ★読みたいチャンネルをここで設定
+int ch = 4;         //Read channel set ★読みたいチャンネルをここで設定
         
 void setup() {
   atp1.SetAccent(0x00);
   atp2.SetAccent(0x00);
-  atp1.SetSpeed(200);
-  atp2.SetSpeed(200);
- pinMode(ledPin1, OUTPUT);
- pinMode(ledPin2, OUTPUT);
+  atp1.SetSpeed(150);   //発話スピードの調整
+  atp2.SetSpeed(150);   //発話スピードの調整
     MIDI.begin(0);
 }
-
 /*
     MIDI信号を受け取り、交互に発声する
 
@@ -333,8 +330,6 @@ int mdata; //MIDI DATA
 int v_flg=0;
 
 void loop() {
-      digitalWrite(ledPin1, NOTE_1);
-      digitalWrite(ledPin2, NOTE_2);
  if (MIDI.read()) {
  MIDI.setInputChannel(ch); // Channel
 
@@ -346,14 +341,14 @@ void loop() {
                                 strcpy_P(buffer, (char*)pgm_read_word(&(string_table[x])));
                                           atp1.SetPitch(m2t[note]);
                                           atp1.Synthe(buffer);
-                                          x++;
+                                          //x++;  //★歌詞を歌わせるときは有効にする
                                           NOW_NOTE=2;  //Note2待機状態
  } else if(NOTE_2 == 0) {
  NOTE_2 = note;
                                  strcpy_P(buffer, (char*)pgm_read_word(&(string_table[x])));
                                           atp2.SetPitch(m2t[note]);
                                           atp2.Synthe(buffer);
-                                          x++;
+                                          //x++;  //★歌詞を歌わせるときは有効にする
                                           NOW_NOTE=1;  //Note1待機状態
  }
  break;
@@ -375,56 +370,17 @@ if(NOW_NOTE == 2 && NOTE_2 == note){
   atp2.Break(); // 途中で発話を中断する
    }
    break;
-  case midi::ControlChange:
+   
+ case midi::ControlChange:
  mdata = MIDI.getData1(); // data1 byte
- if(mdata == 4) {        // mdata=FootController
-      if (v_flg==0) {
-          atp1.SetPitch(0);
-          atp2.SetPitch(0);
-          atp1.SetAccent(0xff);
-          atp2.SetAccent(0xff);
-          atp1.SetSpeed(160);
-          atp2.SetSpeed(130);
-          atp2.SyntheP(PSTR("eeeeee?"));
-        v_flg=1;
-      }else if(v_flg==1) {
-          atp1.SyntheP(PSTR(";ja'xtupaxturixtu/;pa'a-_ku"));
-        v_flg=2;
-      }else if(v_flg==2) {
-          atp1.SyntheP(PSTR(";ra'xturaxtu/;ra'xturaxtu"));
-        v_flg=3;
-      }else if(v_flg==3) {
-          atp1.SyntheP(PSTR(";ra'xturaxtu/;ra'xturaxtu"));
-        v_flg=4;
-      }else if(v_flg==4) {
-          atp2.SyntheP(PSTR("ha'ixtu/;ha'ixtu"));
-        v_flg=5;
-      }else if(v_flg==5) {
-          atp1.SyntheP(PSTR(";ra'xturaxtu/;ra'xturaxtu"));
-        v_flg=6;
-      }else if(v_flg==6) {
-          atp1.SyntheP(PSTR(";ra'xturaxtu/;ra'xturaxtu"));
-        v_flg=7;
-      }else if(v_flg==7) {
-          atp1.SyntheP(PSTR(";ja'xtupaxturixtu/;pa'a-_ku"));
-        v_flg=8;
-      }else if(v_flg==8) {
-          atp1.SyntheP(PSTR(";ra'xturaxtu/;ra'xturaxtu"));
-        v_flg=9;
-      }else if(v_flg==9) {
-          atp1.SyntheP(PSTR(";ra'xturaxtu/;ra'xturaxtu"));
-        v_flg=10;
-      }else if(v_flg==10) {
-          atp2.SyntheP(PSTR("ha'ixtu/;ha'ixtu"));
-          atp1.SetAccent(0x00);
-          atp2.SetAccent(0x00);
-          atp1.SetSpeed(200);
-          atp2.SetSpeed(200);
-        v_flg=0;
-        }
-
-  }
+  if(mdata == 4) {        // mdata=FootController
+  atp1.SetSpeed(50);   //発話スピードの調整
+  atp2.SetSpeed(50);   //発話スピードの調整
+  }else if(mdata == 121) {        // mdata=ResetAllControllers
+      x=0;  //発話リセット
+ }
  break;
+  
  default:
  break;
  }

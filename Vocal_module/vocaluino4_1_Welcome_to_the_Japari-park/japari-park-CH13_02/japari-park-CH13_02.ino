@@ -1,7 +1,4 @@
 /* 
- *  Vocaluino Ver.4.01
- *  ControlChange:FootControllerでセリフ発音
- *  試行錯誤でスケッチが汚いのでそのうち整理するかも…
  *  Vocaluino Ver.4.00
  *  弐号機の実装にLEDアサインを変更
  *  Vocaluino Ver.3.90
@@ -278,98 +275,29 @@ const char pai[] PROGMEM = "paaai";
 const char fa[] PROGMEM = "faaaaaaaaaaaaaaaaaaaa";
 const char weeru[] PROGMEM = "weeeruu";
 const char kaamu[] PROGMEM = "kaaamuu";
-const char hai[] PROGMEM = "haaaiii";
+const char hai[] PROGMEM = "haaii";
 
 
 const char * const string_table[] PROGMEM = {
-
-weru,kamu,twu,yo,ko,so,ja,pa,ri,paaku,
-kyo,o,mo,doo,tann,ba,tann,o,o,sa,wa,gi,
-
-u,gao,
-ta,ka,ra,ka,ni,wa,ra,i,wa,ra,e,ba,fu,re,n,zu,
-ke,n,ka,si,te,su,tya,ka,me,tya,ka,si,te,mo,na,ka,yo,si,
-ke,mo,no,wa,i,te,mo,no,ke,mo,no,wa,i,na,i,
-hon,to,no,a,i,wa,ko,ko,ni,a,ru,
-ho,ra,ki,mi,mo,te,o,tu,na,i,de,da,i,bo,o,ken,
-
-weru,kamu,twu,yo,ko,so,ja,pa,ri,paaku,
-kyo,o,mo,doo,tann,ba,tann,o,o,sa,wa,gi,
-su,ga,ta,ka,ta,ti,mo,ju,u,nin,to,i,ro,
-da,ka,ra,hi,ka,re,a,u,no,
-yu,u,gu,re,so,ra,ni,yu,bi,o,so,to,ka,sa,ne,ta,ra,
-ha,zi,me,ma,si,te,ki,mi,o,mo,to,si,ri,ta,i,na,
-
-u,gao,
-fu,ri,mu,ke,ba,a,ti,ra,ko,ti,ra,de,to,ra,bu,ru,
-na,n,te,ko,ta,teen,den,ba,ra,ba,ra,tin,pun,kan,pun,ma,to,ma,n,naai,
-ke,mo,no,de,su,mo,no,o,o,me,ni,mi,te,te,ne,
-mi,n,na,zi,yu,u,ni,i,ki,te,i,ru,
-so,o,ki,mi,mo,ka,za,ra,na,ku,te,da,i,jo,o,bu,
-
-nai,su,twu,mi,twu,yu,ja,pa,ri,paaku,kyo,o,ka,ra,wa,doo,zo,yo,ro,si,ku,ne,
-i,tu,mo,i,tu,de,mo,ya,sa,si,e,ga,o,ki,mi,o,ma,a,te,i,ta,no,
-hi,ra,ka,re,ta,ge,to,
-yu,me,o,i,pai,ka,ta,a,ta,ra,
-doo,ko,ma,de,de,mo,
-tu,zu,i,te,ku,gu,re,to,ja,a,ni,
+//e,
 
 //セリフ
 
-o,hi,ga,si,e,ho,e,ro,ni,si,e,ho,e,ro,
-se,ka,i,ju,u,ni,hi,bi,ke,sa,fa,ri,me,ro,o,dhi,
-
 weru,kamu,twu,yo,ko,so,ja,pa,ri,paaku,
-kyo,o,mo,doo,tann,ba,tann,o,o,sa,wa,gi,
-su,ga,ta,ka,ta,ti,mo,ju,u,nin,to,i,ro,
-da,ka,ra,hi,ka,re,a,u,no,
-yu,u,gu,re,so,ra,ni,yu,bi,o,so,to,ka,sa,ne,ta,ra,
-ha,zi,me,ma,si,te,ki,mi,o,mo,to,si,ri,ta,i,na,
 
-u,gao,
-ra,ra,ra,ra,
-ra,ra,ra,ra,
-o,weeru,kaamu,twu,u,za,ja,pa,ri,paaku,
-ra,ra,ra,ra,
-ra,ra,ra,ra,ra,ra,
-a,tu,ma,re,to,mo,da,ti,
+//ja,pa,ri,paaku,
+//ra,ra,ra,ra,
+//ra,ra,ra,ra,
+//hai,hai,
 
-ra,ra,ra,ra,
-ra,ra,ra,ra,
-o,weeru,kaamu,twu,u,za,ja,pa,ri,paaku,
-ra,ra,ra,ra,
-ra,ra,ra,ra,ra,ra,
-su,te,ki,na,to,mo,da,ti,
+//ra,ra,ra,ra,
+//ra,ra,ra,ra,
+//ja,pa,ri,paaku,
+//ra,ra,ra,ra,
+//ra,ra,ra,ra,
+//hai,hai,
 
-yo,o,ko,so,ja,pa,ri,paaku,
-};
 
-  //83:03:480
-const char vo1[] PROGMEM = "kokowa/;japaripa'-_ku watashiwa/sa-barukya'ttono/;sa'-barudayo?";
-
-//86:02:000
-const char vo2[] PROGMEM = "ha'-i/;yo- gannba'tte/ikimasu;yo-";
-
-//88:03:480
-const char vo3[] PROGMEM = "iyoo'-_shi araisannni/omakasena'noda-";
-
-//91:01:000
-const char vo4[] PROGMEM = "minnnaiku'wayo?";
-
-//91:04:000
-const char vo5[] PROGMEM = "mo'tto/ueo/mezasa'naito";
-
-//92:04:000
-const char vo6[] PROGMEM = "issho-ke'nnmei/gannbarima'_su";
-
-//93:04:000
-const char vo7[] PROGMEM = "ro'kkuni/iku'ze";
-
-//94:03:480
-const char vo8[] PROGMEM = "'e- mo,mo'-/honnbannde'_suka--------?";
-
-const char * const voice_table[] PROGMEM = {
-  vo1,vo2,vo3,vo4,vo5,vo6,vo7,vo8
 };
 
 char buffer[30];
@@ -377,7 +305,7 @@ int NOTE_1 = 0;
 int NOTE_2 = 0;
 int NOW_NOTE = 1;
 int note;
-int ch = 1;         //Read channel set ★読みたいチャンネルをここで設定
+int ch = 13;         //Read channel set ★読みたいチャンネルをここで設定
         
 void setup() {
   atp1.SetAccent(0x00);
@@ -447,7 +375,6 @@ if(NOW_NOTE == 2 && NOTE_2 == note){
   atp2.Break(); // 途中で発話を中断する
    }
    break;
-   
   case midi::ControlChange:
  mdata = MIDI.getData1(); // data1 byte
  if(mdata == 4) {        // mdata=FootController
@@ -456,30 +383,39 @@ if(NOW_NOTE == 2 && NOTE_2 == note){
           atp2.SetPitch(0);
           atp1.SetAccent(0xff);
           atp2.SetAccent(0xff);
-          atp1.SetSpeed(130);
+          atp1.SetSpeed(160);
           atp2.SetSpeed(130);
-          atp1.SyntheP(PSTR("kokowa/;japaripa'-_ku watashiwa/sa-barukya'ttono/;sa'-barudayo?"));
+          atp2.SyntheP(PSTR("eeeeee?"));
         v_flg=1;
       }else if(v_flg==1) {
-          atp2.SyntheP(PSTR("ha'-i/;yo- gannba'tte/ikimasu;yo-"));
+          atp1.SyntheP(PSTR(";ja'xtupaxturixtu/;pa'a-_ku"));
         v_flg=2;
       }else if(v_flg==2) {
-          atp1.SyntheP(PSTR("iyoo'-_shi araisannni/omakasena'noda-"));
+          atp1.SyntheP(PSTR(";ra'xturaxtu/;ra'xturaxtu"));
         v_flg=3;
       }else if(v_flg==3) {
-          atp2.SyntheP(PSTR("minnnaiku'wayo?"));
+          atp1.SyntheP(PSTR(";ra'xturaxtu/;ra'xturaxtu"));
         v_flg=4;
       }else if(v_flg==4) {
-          atp1.SyntheP(PSTR("mo'tto/ueo/mezasa'naito"));
+          atp2.SyntheP(PSTR("ha'ixtu/;ha'ixtu"));
         v_flg=5;
       }else if(v_flg==5) {
-          atp2.SyntheP(PSTR("issho-ke'nnmei/gannbarima'_su"));
+          atp1.SyntheP(PSTR(";ra'xturaxtu/;ra'xturaxtu"));
         v_flg=6;
       }else if(v_flg==6) {
-          atp1.SyntheP(PSTR("ro'kkuni/iku'ze"));
+          atp1.SyntheP(PSTR(";ra'xturaxtu/;ra'xturaxtu"));
         v_flg=7;
       }else if(v_flg==7) {
-          atp2.SyntheP(PSTR("e- mo,mo'-/honnbannde'_suka-------?"));
+          atp1.SyntheP(PSTR(";ja'xtupaxturixtu/;pa'a-_ku"));
+        v_flg=8;
+      }else if(v_flg==8) {
+          atp1.SyntheP(PSTR(";ra'xturaxtu/;ra'xturaxtu"));
+        v_flg=9;
+      }else if(v_flg==9) {
+          atp1.SyntheP(PSTR(";ra'xturaxtu/;ra'xturaxtu"));
+        v_flg=10;
+      }else if(v_flg==10) {
+          atp2.SyntheP(PSTR("ha'ixtu/;ha'ixtu"));
           atp1.SetAccent(0x00);
           atp2.SetAccent(0x00);
           atp1.SetSpeed(200);

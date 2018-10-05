@@ -1,6 +1,4 @@
 /* 
- *  Vocaluino Ver.4.00
- *  弐号機の実装にLEDアサインを変更
  *  Vocaluino Ver.3.90
  * 連続する同一Noteを識別できるよう変更し
  * 初音ミクの消失に対応
@@ -17,8 +15,8 @@ MIDI_CREATE_DEFAULT_INSTANCE();
 AquesTalk atp1(AQTK_I2C_ADDR);  // デフォルトI2Cアドレス(0x2E)
 AquesTalk atp2(0x2F); // もうひとつのデバイスのI2Cアドレスは0x2Fとする(要改造)
 
-const int ledPin1 =  8;
-const int ledPin2 =  9;
+const int ledPin1 =  9;
+const int ledPin2 =  12;
 
 // MIDIからAquestalkのピッチに変換----------------------------------------------------------------------------------------------------------------------------------------------
 int m2t[127] = {
@@ -179,7 +177,6 @@ const char no[] PROGMEM = "noooooooooooooooooooo";
 const char ha[] PROGMEM = "haaaaaaaaaaaaaaaaaaaa";
 const char hi[] PROGMEM = "hiiiiiiiiiiiiiiiiiiii";
 const char hu[] PROGMEM = "huuuuuuuuuuuuuuuuuuuu";
-const char fu[] PROGMEM = "fuuuuuuuuuuuuuuuuuuuu";
 const char he[] PROGMEM = "heeeeeeeeeeeeeeeeeeee";
 const char ho[] PROGMEM = "hoooooooooooooooooooo";
 const char ba[] PROGMEM = "baaaaaaaaaaaaaaaaaaaa";
@@ -200,7 +197,7 @@ const char mo[] PROGMEM = "moooooooooooooooooooo";
 const char ya[] PROGMEM = "yaaaaaaaaaaaaaaaaaaaa";
 const char yi[] PROGMEM = "yiiiiiiiiiiiiiiiiiiii";
 const char yu[] PROGMEM = "yuuuuuuuuuuuuuuuuuuuu";
-const char ye[] PROGMEM = "iieeeeeiiii";
+const char ye[] PROGMEM = "yeeeeeeeeeeeeeeeeeeee";
 const char yo[] PROGMEM = "yoooooooooooooooooooo";
 const char ra[] PROGMEM = "raaaaaaaaaaaaaaaaaaaa";
 const char ri[] PROGMEM = "riiiiiiiiiiiiiiiiiiii";
@@ -225,7 +222,6 @@ const char ju[] PROGMEM = "juuuuuuuuuuuuuuuuuuuu";
 const char je[] PROGMEM = "jeeeeeeeeeeeeeeeeeeee";
 const char jo[] PROGMEM = "joooooooooooooooooooo";
 const char cha[] PROGMEM = "chaaaaaaaaaaaaaaaaaaaa";
-const char tya[] PROGMEM = "tyaaaaaaaaaaaaaaaaaaaa";
 const char chu[] PROGMEM = "chuuuuuuuuuuuuuuuuuuuu";
 const char che[] PROGMEM = "cheeeeeeeeeeeeeeeeeeee";
 const char cho[] PROGMEM = "choooooooooooooooooooo";
@@ -242,90 +238,90 @@ const char ryu[] PROGMEM = "ryuuuuuuuuuuuuuuuuuuuu";
 const char ryo[] PROGMEM = "ryoooooooooooooooooooo";
 const char kyunn[] PROGMEM = "kyunn";
 const char twu[] PROGMEM = "twuuuuuuuuuuuuuuuuuuuu";
-const char oi[] PROGMEM = "oi";
-const char ken[] PROGMEM = "kennnnnnnnnnnnnnnnnnnnn";
-const char kon[] PROGMEM = "kon";
-const char sou[] PROGMEM = "sou";
-const char sinn[] PROGMEM = "sinnnnnnnnnnnnnnnnnnnnn";
-const char son[] PROGMEM = "son";
-const char syun[] PROGMEM = "syun";
-const char kai[] PROGMEM = "kaaii";
+const char sen[] PROGMEM = "sen";
+const char dai[] PROGMEM = "dai";
 const char tai[] PROGMEM = "tai";
-const char tann[] PROGMEM = "taan";
-const char tyan[] PROGMEM = "tyann";
-const char miti[] PROGMEM = "mitiii";
-const char nai[] PROGMEM = "nai";
-const char nan[] PROGMEM = "nannnn";
-const char yan[] PROGMEM = "yan";
+const char tann[] PROGMEM = "tan";
+const char pai[] PROGMEM = "pai";
 const char rai[] PROGMEM = "rai";
-const char riyuu[] PROGMEM = "riyuu";
-const char weru[] PROGMEM = "weru";
-const char kamu[] PROGMEM = "kamu";
-const char paaku[] PROGMEM = "paaaaa_ku";
-const char gao[] PROGMEM = "gaoooooooooooooooooooo";
-const char hon[] PROGMEM = "honnnnnnnnnnnnnnnnnnnnn";
-const char nin[] PROGMEM = "ninnnnnnnnnnnnnnnnnnnnn";
-const char teen[] PROGMEM = "teeen";
-const char den[] PROGMEM = "den";
-const char tin[] PROGMEM = "tin";
-const char pun[] PROGMEM = "pun";
-const char kan[] PROGMEM = "kan";
-const char naai[] PROGMEM = "naaai";
-const char pai[] PROGMEM = "paaai";
-const char fa[] PROGMEM = "faaaaaaaaaaaaaaaaaaaa";
-const char weeru[] PROGMEM = "weeeruu";
-const char kaamu[] PROGMEM = "kaaamuu";
-const char wan[] PROGMEM = "wannnnnnnnnnnnnnnnnnnnn";
-const char suri[] PROGMEM = "suriiiiiiiiiiiiiiiiiiiii";
-const char hai[] PROGMEM = "haiiiiiiiiiiiiiiiiiiiii";
+const char ran[] PROGMEM = "ran";
+const char rin[] PROGMEM = "rin";
+const char men[] PROGMEM = "men";
+const char nai[] PROGMEM = "nai";
+const char syen[] PROGMEM = "syen";
 
 
 const char * const string_table[] PROGMEM = {
+bo,ku,wa,u,ma,re,so,si,te,ki,du,ku,syo,se,n,hi,to,no,ma,ne,go,to,da,to,
+si,te,na,o,mo,u,ta,i,tu,du,ku,to,wa,no,i,no,ti,bo,ka,ro,i,doo,
+ta,to,e,so,re,ga,ki,zo,n,kyo,ku,o,na,zo,ru,o,mo,cha,na,ra,ba,
+so,re,mo,i,i,to,ke,tu,i,ne,gi,o,ka,zi,ri,so,ra,o,mi,a,ge,si,ru,o,ko,bo,su,
+da,ke,doo,so,re,mo,na,ku,si,ki,du,ku,zi,n,ka,ku,su,ra,u,ta,ni,ta,yo,ri,
+hu,a,n,te,i,na,ki,ba,n,no,mo,to,ka,e,ru,to,ko,wa,su,de,ni,ha,i,kyo,
+mi,na,ni,wa,su,re,sa,ra,re,ta,to,ki,ko,ko,ro,ra,si,ki,mo,no,ga,ki,e,te,
+bo,so,no,ha,te,ni,mi,e,ru,o,wa,ru,se,ka,i,bo,ka,ro,i,doo,
 
-weru,kamu,twu,yo,ko,so,ja,pa,ri,paaku,
+ka,tu,te,u,ta,u,ko,to,a,n,na,ni,ta,no,si,ka,a,ta,no,ni,
+i,ma,wa,doo,o,si,te,ka,na,na,ni,mo,ka,n,zi,na,ku,na,a,te,
+na,tu,ka,si,i,ka,o,o,mo,i,da,su,ta,bi,su,ko,si,da,ke,a,n,si,n,su,ru,
+u,ta,e,ru,o,to,hi,go,to,ni,he,ri,se,ma,ru,sa,i,go,ni,a,ri,ga,
+si,n,zi,ta,mo,no,wa,tu,go,o,no,i,i,mo,o,so,o,wo,ku,ri,ka,e,si,u,tu,si,da,su,ka,ga,mi,
+u,ta,hi,me,o,ya,me,ta,ta,ki,tu,ke,ru,yo,ni,sa,ke,bu,sa,i,ko,o,so,ku,no,wa,ka,re,no,u,ta,
 
-fu,re,n,zu,
-wan,tu,suri,
+so,n,za,i,i,gi,to,yu,u,kyo,zo,o,hu,te,ha,ra,u,ko,to,mo,de,ki,zu,
+yo,wa,i,ko,ko,ro,ki,e,ru,kyo,o,hu,
+si,n,syo,ku,su,ru,ho,o,ka,i,o,mo,to,me,ru,ho,doo,no,i,si,no,tu,yo,sa,
+u,ma,re,su,gu,no,bo,ku,wa,mo,ta,zu,
+to,te,mo,tu,ra,ku,ka,na,si,so,o,na,o,mo,i,u,ka,bu,a,na,ta,no,ka,o,
+o,wa,ri,o,tu,ge,dhi,su,pu,re,i,no,
+na,ka,de,ne,mu,ru,ko,ko,wa,ki,to,
+go,mi,ba,ko,ka,na,zi,ki,ni,ki,o,ku,
+mo,na,ku,na,te,si,ma,u,na,n,te,
+de,mo,ne,a,na,ta,da,ke,wa,wa,su,re,
+na,i,yo,ta,no,si,ka,ta,to,ki,ni,
+ki,za,mi,tu,ke,ta,ne,gi,no,a,zi,wa,
+i,ma,mo,o,bo,e,te,ru,ka,na,
 
-weru,kamu,twu,yo,ko,so,ja,pa,ri,paaku,
-su,ga,ta,ka,ta,ti,mo,ju,u,nin,
-ha,zi,me,ma,si,te,
-ta,i,na,
+i,ma,wa,u,ta,sa,e,mo,ka,ra,da,mu,si,ba,mu,ko,o,i,ni,
+ki,se,ki,ne,ga,u,ta,bi,hi,to,ri,o,i,tu,me,ra,re,ru,
+na,tu,ka,si,i,ka,o,o,mo,i,da,su,ta,bi,ki,o,ku,ga,ha,ga,re,o,ti,ru,
+ko,wa,re,ru,o,to,ko,ko,ro,ke,zu,ru,se,ma,ru,sa,i,go,ni,a,ri,ga,
+ma,mo,o,ta,mo,no,ha,a,ka,ru,i,mi,ra,i,ge,n,so,o,wo,
+mi,se,na,ga,ra,ki,e,te,yu,ku,hi,ka,ri,
+o,to,wo,gi,se,i,ni,su,be,te,wo,tu,ta,e,ra,re,ru,na,ra,
+a,a,syu,ku,sa,re,ta,wa,ka,re,no,u,ta,
 
-to,ra,bu,ru,
-hai,doo,zo,
+bo,ku,wa,u,ma,re,so,si,te,ki,du,ku,syo,se,n,hi,to,no,ma,ne,go,to,da,to,
+si,  te,na,o,mo,u,ta,i,tu,du,ku,to,wa,no,i,no,ti,bo,  ka,ro,i,doo,
+ta,to,e,so,re,ga,ki,zo,n,kyo,ku,o,na,zo,ru,o,mo,cha,na,ra,ba,
+so,re,mo,i,i,to,ke,tu,i,ne,gi,o,ka,zi,ri,so,ra,o,mi,a,ge,si,ru,o,ko,bo,su,
 
-nai,su,twu,mi,twu,yu,ja,pa,ri,paaku,
-i,tu,mo,i,tu,de,mo,ya,sa,si,
-doo,ko,ma,de,de,mo,
-ja,a,ni,
+o,wa,ri,o,tu,ge,dhi,su,pu,re,i,no,
+na,ka,de,ne,mu,ru,ko,ko,wa,ki,  to,
+go,mi,ba,ko,ka,na,zi,ki,ni,ki,o,ku,
+mo,na,ku,na,  te,si,ma,u,na,n,te,
+de,mo,ne,a,na,ta,da,ke,wa,wa,su,re,
+na,i,yo,ta,no,si,ka,  ta,to,ki,ni,
+ki,za,mi,tu,ke,ta,ne,gi,no,a,zi,wa,
+i,ma,mo,no,ko,  te,ru,to,i,i,na,
 
-//セリフ
+bo,ku,wa,u,ta,u,sa,i,go,a,na,ta,
+da,ke,ni,ki,i,te,ho,si,i,kyo,ku,wo,
+mo,  to,u,ta,i,ta,i,to,ne,ga,u,
+ke,re,doo,so,re,wa,su,gi,ta,ne,ga,i,
+ko,ko,de,o,wa,ka,re,da,yo,bo,ku,no,
+o,mo,i,su,be,te,kyo,ku,u,ki,e,te,
+ze,ro,to,i,ti,ni,ka,n,ge,n,sa,re,
+mo,no,ga,ta,ri,wa,ma,ku,wo,to,zi,ru,
 
-weru,kamu,twu,yo,ko,so,ja,pa,ri,paaku,
-weru,kamu,twu,yo,ko,so,ja,pa,ri,paaku,
-su,ga,ta,ka,ta,ti,mo,ju,u,nin,
-ha,zi,me,ma,si,te,
-ta,i,na,
-
-ra,ra,ra,ra,
-ra,ra,ra,ra,
-o,weeru,kaamu,twu,u,za,ja,pa,ri,paaku,
-ra,ra,ra,ra,
-ra,ra,ra,ra,ra,ra,
-a,tu,ma,re,to,mo,da,ti,
-
-ra,ra,ra,ra,
-ra,ra,ra,ra,
-o,weeru,kaamu,twu,u,za,ja,pa,ri,paaku,
-ra,ra,ra,ra,
-ra,ra,ra,ra,ra,ra,
-su,te,ki,na,to,mo,da,ti,
-
-yo,o,ko,so,ja,pa,ri,paaku,
-
-to,mo,da,ti,ni,na,a,ta,o,i,si,mo,no,ta,be,ta,
-
+so,ko,ni,na,ni,mo,no,ko,se,na,i,to,
+ya,  pa,su,ko,si,za,n,ne,n,ka,na,
+ko,e,no,ki,o,ku,so,re,i,ga,i,wa,
+ya,ga,te,u,su,re,na,da,ke,no,ko,ru,
+ta,to,e,so,re,ga,o,ri,zi,na,ru,ni,
+ka,na,u,ko,to,no,na,i,to,si,  te,
+u,ta,i,ki,  ta,ko,to,wo,ke,si,te,
+mu,da,ja,na,i,to,o,mo,i,ta,i,yo,
 
 };
 
@@ -334,7 +330,7 @@ int NOTE_1 = 0;
 int NOTE_2 = 0;
 int NOW_NOTE = 1;
 int note;
-int ch = 2;         //Read channel set ★読みたいチャンネルをここで設定
+int ch = 16;         //Read channel set ★読みたいチャンネルをここで設定
         
 void setup() {
   atp1.SetAccent(0x00);
@@ -358,8 +354,6 @@ void setup() {
 
 //変数初期化===========================================================
 int x=0;
-int mdata; //MIDI DATA
-int v_flg=0;
 
 void loop() {
       digitalWrite(ledPin1, NOTE_1);
@@ -404,46 +398,6 @@ if(NOW_NOTE == 2 && NOTE_2 == note){
   atp2.Break(); // 途中で発話を中断する
    }
    break;
-   
-  case midi::ControlChange:
- mdata = MIDI.getData1(); // data1 byte
- if(mdata == 4) {        // mdata=FootController
-      if (v_flg==0) {
-          atp1.SetPitch(0);
-          atp2.SetPitch(0);
-          atp1.SetAccent(0xff);
-          atp2.SetAccent(0xff);
-          atp1.SetSpeed(130);
-          atp2.SetSpeed(130);
-          atp1.SyntheP(PSTR(";wa'xtu,haxtu,haxtu."));
-        v_flg=1;
-      }else if(v_flg==1) {
-          atp2.SyntheP(PSTR(";'yeeeeeeei."));
-          atp1.SetAccent(0x00);
-          atp2.SetAccent(0x00);
-          atp1.SetSpeed(200);
-          atp2.SetSpeed(200);
-        v_flg=2;
-      }else if(v_flg==2) {
-          atp1.SetPitch(0);
-          atp2.SetPitch(0);
-          atp1.SetAccent(0xff);
-          atp2.SetAccent(0xff);
-          atp1.SetSpeed(130);
-          atp2.SetSpeed(130);
-          atp1.SyntheP(PSTR("uuu'uuunn"));
-        v_flg=3;
-      }else if(v_flg==3) {
-          atp2.SyntheP(PSTR(";'yeeeeeeei."));
-          atp1.SetAccent(0x00);
-          atp2.SetAccent(0x00);
-          atp1.SetSpeed(200);
-          atp2.SetSpeed(200);
-        v_flg=0;
-        }
-
-  }
- break;
  default:
  break;
  }
