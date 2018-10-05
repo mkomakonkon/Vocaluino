@@ -1,0 +1,180 @@
+; ATP3011R4-PU用マクロ
+; 2018/9/30 mkoma
+; 創世のアクエリオン
+;
+;機器設定
+;Arduino UnoのマイコンをATP3011R4-PUに載せ替え
+;GNDをスピーカーの片側へ接続
+;D6をスピーカーのもう片側へ接続
+;
+;Teraterm端末設定
+;・改行コード：CR+LF
+;・ローカルエコーにチェック
+;
+;ツベのチャンネル登録とかしてくれると次の投稿が早まるかもしれません(^^)
+;<https://www.youtube.com/user/mkomakonkon>
+
+
+; 同期開始(文字化けが収まらない時は手動で"?"を入力してみて下さい)
+sendln '?'
+pause 1
+sendln '?'
+pause 1
+sendln '?'
+pause 1
+
+; WRITE EP_SPEED[0x002-0x003] default:100
+; 早く歌わせたい場合はこの値を増やす。
+; I2Cで一度に送れる文字は30文字のため早くしすぎると
+; 長い音が出ない。
+sendln '#W00264'
+wait '>'
+sendln
+wait '>'
+sendln '#W00300'
+wait '>'
+sendln
+wait '>'
+
+; WRITE EP_ACCENT[0x03C] default:0xFF
+; "0"でアクセントが無くなり一定音程が出る。
+sendln '#W03C00'
+wait '>'
+sendln
+wait '>'
+
+; WRITE EP_PITCHT[0x03D] default:0x40
+; 声の高さ:pitch: 0-255  default:64 0:高い 254:低い
+sendln '#W03D1F'
+wait '>'
+sendln 'i'
+wait '>'
+
+sendln '#W03D1F'
+wait '>'
+sendln 'ti'
+wait '>'
+
+sendln '#W03D1F'
+wait '>'
+sendln 'ma'
+wait '>'
+
+sendln '#W03D1F'
+wait '>'
+sendln 'n'
+wait '>'
+
+sendln '#W03D0E'
+wait '>'
+sendln 'ne'
+wait '>'
+
+sendln '#W03D0E'
+wait '>'
+sendln 'n'
+wait '>'
+
+sendln '#W03D0E'
+wait '>'
+sendln 'to'
+wait '>'
+
+sendln '#W03D0E'
+wait '>'
+sendln 'ni'
+wait '>'
+
+sendln '#W03D0B'
+wait '>'
+sendln 'se'
+wait '>'
+
+sendln '#W03D0B'
+wait '>'
+sendln 'n'
+wait '>'
+
+sendln '#W03D0E'
+wait '>'
+sendln 'ne'
+wait '>'
+
+sendln '#W03D12'
+wait '>'
+sendln 'n'
+wait '>'
+
+sendln '#W03D0E'
+wait '>'
+sendln 'ma'
+wait '>'
+
+sendln '#W03D0E'
+wait '>'
+sendln 'e'
+wait '>'
+
+sendln '#W03D15'
+wait '>'
+sendln 'ka'
+wait '>'
+
+sendln '#W03D19'
+wait '>'
+sendln 'ra'
+wait '>'
+
+sendln '#W03D1F'
+wait '>'
+sendln 'aaaa'
+wait '>'
+
+sendln '#W03D06'
+wait '>'
+sendln 'iiii'
+wait '>'
+
+sendln '#W03D08'
+wait '>'
+sendln 'siiii'
+wait '>'
+
+sendln '#W03D0E'
+wait '>'
+sendln 'teeee'
+wait '>'
+
+sendln '#W03D0B'
+wait '>'
+sendln 'ruuuuuuuuuuuuuuuuuu'
+wait '>'
+
+;*** 終了処理－初期値に戻す－ ***
+; WRITE EP_SPEED[0x002-0x003] default:100
+sendln '#W00264'
+wait '>'
+sendln
+wait '>'
+sendln '#W00300'
+wait '>'
+sendln
+wait '>'
+
+; WRITE EP_ACCENT[0x03C] default:0xFF
+sendln '#W03CFF'
+wait '>'
+sendln
+wait '>'
+
+; WRITE EP_PITCHT[0x03D] default:0x40
+sendln '#W03D40'
+wait '>'
+sendln
+wait '>'
+
+; WRITE EP_PITCHT[0x03D] default:0x40
+sendln '#W03D40'
+wait '>'
+sendln
+wait '>'
