@@ -43,7 +43,7 @@ wait '>'
 sendln
 wait '>'
 
-; WRITE EP_PITCHT[0x03D] default:0x40
+; WRITE EP_PITCH[0x03D] default:0x40
 ; 声の高さ:pitch: 0-255  default:64 0:高い 254:低い
 sendln '#W03D1F'
 wait '>'
