@@ -1,21 +1,21 @@
-; ATP3011R4-PU�p�}�N��
+; ATP3011R4-PU用マクロ
 ; 2018/9/30 mkoma
-; �n���̃A�N�G���I��
+; 創聖のアクエリオン
 ;
-;�@��ݒ�
-;Arduino Uno�̃}�C�R����ATP3011R4-PU�ɍڂ��ւ�
-;GND���X�s�[�J�[�̕Б��֐ڑ�
-;D6���X�s�[�J�[�̂����Б��֐ڑ�
+;機器設定
+;Arduino UnoのマイコンをATP3011R4-PUに載せ替え
+;GNDをスピーカーの片側へ接続
+;D6をスピーカーのもう片側へ接続
 ;
-;Teraterm�[���ݒ�
-;�E���s�R�[�h�FCR+LF
-;�E���[�J���G�R�[�Ƀ`�F�b�N
+;Teraterm端末設定
+;・改行コード：CR+LF
+;・ローカルエコーにチェック
 ;
-;�c�x�̃`�����l���o�^�Ƃ����Ă����Ǝ��̓��e�����܂邩������܂���(^^)
+;ツベのチャンネル登録とかしてくれると次の投稿が早まるかもしれません(^^)
 ;<https://www.youtube.com/user/mkomakonkon>
 
 
-; �����J�n(�������������܂�Ȃ����͎蓮��"?"����͂��Ă݂ĉ�����)
+; 同期開始(文字化けが収まらない時は手動で"?"を入力してみて下さい)
 sendln '?'
 pause 1
 sendln '?'
@@ -24,9 +24,9 @@ sendln '?'
 pause 1
 
 ; WRITE EP_SPEED[0x002-0x003] default:100
-; �����̂킹�����ꍇ�͂��̒l�𑝂₷�B
-; I2C�ň�x�ɑ���镶����30�����̂��ߑ������������
-; ���������o�Ȃ��B
+; 早く歌わせたい場合はこの値を増やす。
+; I2Cで一度に送れる文字は30文字のため早くしすぎると
+; 長い音が出ない。
 sendln '#W00264'
 wait '>'
 sendln
@@ -37,14 +37,14 @@ sendln
 wait '>'
 
 ; WRITE EP_ACCENT[0x03C] default:0xFF
-; "0"�ŃA�N�Z���g�������Ȃ��艹�����o��B
+; "0"でアクセントが無くなり一定音程が出る。
 sendln '#W03C00'
 wait '>'
 sendln
 wait '>'
 
 ; WRITE EP_PITCHT[0x03D] default:0x40
-; ���̍���:pitch: 0-255  default:64 0:���� 254:�Ⴂ
+; 声の高さ:pitch: 0-255  default:64 0:高い 254:低い
 sendln '#W03D1F'
 wait '>'
 sendln 'i'
@@ -150,7 +150,7 @@ wait '>'
 sendln 'ruuuuuuuuuuuuuuuuuu'
 wait '>'
 
-;*** �I�������|�����l�ɖ߂��| ***
+;*** 終了処理－初期値に戻す－ ***
 ; WRITE EP_SPEED[0x002-0x003] default:100
 sendln '#W00264'
 wait '>'
