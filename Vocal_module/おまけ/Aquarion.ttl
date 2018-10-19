@@ -167,13 +167,7 @@ wait '>'
 sendln
 wait '>'
 
-; WRITE EP_PITCHT[0x03D] default:0x40
-sendln '#W03D40'
-wait '>'
-sendln
-wait '>'
-
-; WRITE EP_PITCHT[0x03D] default:0x40
+; WRITE EP_PITCH[0x03D] default:0x40
 sendln '#W03D40'
 wait '>'
 sendln
