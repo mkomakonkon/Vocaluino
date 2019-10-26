@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:Analog2.0_analog_sequencer-cache
 EELAYER 26 0
 EELAYER END
 $Descr A2 23386 16535
@@ -3678,7 +3677,7 @@ B:Add Diodes
 Text Notes 7950 1800 0    79   ~ 0
 B:Add Diodes
 Text Notes 5400 6450 0    79   ~ 0
-C:Mix Gate stop at CV OFF
+C:Gate stop at CV OFF
 Wire Wire Line
 	6050 7400 6050 7450
 Wire Wire Line
