@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name TR-808_clone-rescue)(type Legacy)(uri ${KIPRJMOD}/TR-808_clone-rescue.lib)(options "")(descr ""))
+)
