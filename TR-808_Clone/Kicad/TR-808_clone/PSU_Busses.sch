@@ -1836,4 +1836,75 @@ F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/41/4f/b
 	1    13450 2300
 	1    0    0    -1  
 $EndComp
+$Comp
+L Connector:Barrel_Jack_Switch J5
+U 1 1 5E11032F
+P 13200 4200
+F 0 "J5" H 13255 4517 50  0000 C CNN
+F 1 "Barrel_Jack_Switch" H 13255 4426 50  0000 C CNN
+F 2 "Connector_BarrelJack:BarrelJack_Wuerth_6941xx301002" H 13250 4160 50  0001 C CNN
+F 3 "~" H 13250 4160 50  0001 C CNN
+	1    13200 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP1 C?
+U 1 1 5E146449
+P 14050 4300
+AR Path="/5E146449" Ref="C?"  Part="1" 
+AR Path="/5D26E21D/5E146449" Ref="C238"  Part="1" 
+F 0 "C238" H 13950 4150 50  0000 C CNN
+F 1 "47uF/16V" H 13850 4050 50  0000 C CNN
+F 2 "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" H 14050 4300 50  0001 C CNN
+F 3 "~" H 14050 4300 50  0001 C CNN
+	1    14050 4300
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	13500 4100 14050 4100
+Wire Wire Line
+	14050 4100 14050 4150
+Wire Wire Line
+	14050 4450 14050 4600
+Wire Wire Line
+	14050 4600 13700 4600
+Wire Wire Line
+	13700 4600 13700 4300
+Wire Wire Line
+	13700 4200 13500 4200
+Wire Wire Line
+	13500 4300 13700 4300
+Connection ~ 13700 4300
+Wire Wire Line
+	13700 4300 13700 4200
+$Comp
+L power:+5V #PWR0488
+U 1 1 5E1AB758
+P 14050 4050
+F 0 "#PWR0488" H 14050 3900 50  0001 C CNN
+F 1 "+5V" H 14065 4223 50  0000 C CNN
+F 2 "" H 14050 4050 50  0001 C CNN
+F 3 "" H 14050 4050 50  0001 C CNN
+	1    14050 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5E1AB883
+P 14050 4650
+AR Path="/5E1AB883" Ref="#PWR?"  Part="1" 
+AR Path="/5D26E21D/5E1AB883" Ref="#PWR0489"  Part="1" 
+F 0 "#PWR0489" H 14050 4400 50  0001 C CNN
+F 1 "GND" H 14055 4477 50  0000 C CNN
+F 2 "" H 14050 4650 50  0001 C CNN
+F 3 "" H 14050 4650 50  0001 C CNN
+	1    14050 4650
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	14050 4050 14050 4100
+Connection ~ 14050 4100
+Wire Wire Line
+	14050 4600 14050 4650
+Connection ~ 14050 4600
 $EndSCHEMATC
